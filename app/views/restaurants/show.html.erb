@@ -7,8 +7,24 @@
        <p class="well">The phone number: <%= @restaurant.phone_number%></p>
        <p class="well">The category: <%= @restaurant.category%></p>
 
+       <h2>Reviews</h2>
+
+<% if @restaurant.reviews.any? %>
+  <% @restaurant.reviews.each do |review| %>
+    <p>
+      <strong><%= review.rating %>/5</strong> — <%= review.content %>
+    </p>
+  <% end %>
+<% else %>
+  <p>No reviews yet.</p>
+<% end %>
+
+
   <hr>
   <%= link_to restaurants_path do %>
     <i class="fa-solid fa-arrow-rotate-left"></i> Back to list
   <% end %>
+
+  <%= link_to "Add a review", new_restaurant_review_path(@restaurant) %>
+    <i class="fa-solid fa-arrow-rotate-left"></i>
 </div>
