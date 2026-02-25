@@ -11,9 +11,19 @@
 
 <% if @restaurant.reviews.any? %>
   <% @restaurant.reviews.each do |review| %>
-    <p>
-      <strong><%= review.rating %>/5</strong> — <%= review.content %>
-    </p>
+   <p>
+  <strong>
+    <% review.rating.times do %>
+      <i class="fa-solid fa-star"></i>
+    <% end %>
+  </strong>
+  – <%= review.content %>
+</p>
+       <%= link_to "Delete",
+                review_path(review),
+                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                class: "btn btn-sm btn-danger" %>
+
   <% end %>
 <% else %>
   <p>No reviews yet.</p>
@@ -21,10 +31,7 @@
 
 
   <hr>
-  <%= link_to restaurants_path do %>
-    <i class="fa-solid fa-arrow-rotate-left"></i> Back to list
-  <% end %>
+  <%= link_to "Back to list", restaurants_path, class: "btn btn-primary" %>
 
-  <%= link_to "Add a review", new_restaurant_review_path(@restaurant) %>
-    <i class="fa-solid fa-arrow-rotate-left"></i>
+  <%= link_to "Add a review", new_restaurant_review_path(@restaurant),class: "btn btn-primary" %>
 </div>

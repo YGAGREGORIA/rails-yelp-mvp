@@ -6,10 +6,13 @@ class ReviewsController < ApplicationController
     @review = Review.new
   end
   def create
-    @review = Review.new(review_params)
-    @review.restaurant = @restaurant
-    @review.save
+   @review = @restaurant.reviews.new(review_params)
+
+  if @review.save
     redirect_to restaurant_path(@restaurant)
+  else
+    render :new, status: :unprocessable_entity
+  end
   end
   def destroy
     @review = Review.find(params[:id])
@@ -24,6 +27,6 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:content)
+    params.require(:review).permit(:content, :rating)
   end
 end
